@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katlego Manchidi's CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('ggt.jpg'); /* Replace with your background image URL */
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+        }
+        nav {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            margin: 10px;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: rgba(40, 167, 69, 0.9); /* Green background */
+            border: 2px solid #fff; /* White border */
+            border-radius: 30px; /* Rounded buttons */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        nav a:hover {
+            background-color: #28a745; /* Darker green on hover */
+            transform: scale(1.05); /* Slightly larger on hover */
+        }
+        .container {
+            padding: 20px;
+        }
+        section {
+            display: none;
+            padding: 20px;
+            background-color: rgba(40, 167, 69, 0.7); /* Dark green background */
+            margin: 20px auto;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #28a745; /* Green border */
+            border-radius: 10px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.9); /* Light background for input fields */
+            color: #333; /* Dark text for better readability */
+            font-size: 16px; /* Larger text */
+        }
+        input:focus, textarea:focus {
+            border-color: #218838; /* Darker green on focus */
+            outline: none; /* Remove outline */
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Subtle shadow on focus */
+        }
+        button {
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px; /* Rounded button */
+            cursor: pointer;
+            font-size: 16px; /* Larger text */
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Tsebanye Theodore Mashakane's CV</h1>
+    <nav>
+        <a href="#" onclick="showSection('home')">Home</a>
+        <a href="#" onclick="showSection('personal')">Personal Information</a>
+        <a href="#" onclick="showSection('education')">Education</a>
+        <a href="#" onclick="showSection('work')">Work Experience</a>
+        <a href="#" onclick="showSection('skills')">Skills</a>
+        <a href="#" onclick="showSection('projects')">Projects</a>
+        <a href="#" onclick="showSection('contact')">Contact Form</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- Home Section -->
+    <section id="home">
+        <h2>Welcome to My CV</h2>
+        <p>This is the introduction to my CV. Navigate through different sections to learn more about me.</p>
+    </section>
+
+    <!-- Personal Information Section -->
+    <section id="personal">
+        <h2>Personal Information</h2>
+        <input type="text" id="name" placeholder="Name" onchange="saveData('name', this.value)">
+        <input type="email" id="email" placeholder="Email" onchange="saveData('email', this.value)">
+        <textarea id="bio" placeholder="Short Bio" onchange="saveData('bio', this.value)"></textarea>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <h2>Education</h2>
+        <textarea id="educationDetails" placeholder="Educational Background" onchange="saveData('educationDetails', this.value)"></textarea>
+    </section>
+
+    <!-- Work Experience Section -->
+    <section id="work">
+        <h2>Work Experience</h2>
+        <textarea id="workDetails" placeholder="Professional Experience" onchange="saveData('workDetails', this.value)"></textarea>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <textarea id="skillsList" placeholder="List of Skills" onchange="saveData('skillsList', this.value)"></textarea>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <textarea id="projectsDetails" placeholder="Significant Projects" onchange="saveData('projectsDetails', this.value)"></textarea>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact">
+        <h2>Contact Form</h2>
+        <input type="text" id="contactName" placeholder="Your Name" onchange="saveData('contactName', this.value)">
+        <input type="email" id="contactEmail" placeholder="Your Email" onchange="saveData('contactEmail', this.value)">
+        <textarea id="contactMessage" placeholder="Your Message" onchange="saveData('contactMessage', this.value)"></textarea>
+        <button onclick="submitForm()">Submit</button>
+    </section>
+        
+        <h3>Education</h3>
+        <p id="overviewEducation"></p>
+        
+        <h3>Work Experience</h3>
+        <p id="overviewWork"></p>
+        
+        <h3>Skills</h3>
+        <p id="overviewSkills"></p>
+        
+        <h3>Projects</h3>
+        <p id="overviewProjects"></p>
+    </section>
+
+</div>
+
+<script>
+    // Function to show the selected section
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => section.style.display = 'none');
+        document.getElementById(sectionId).style.display = 'block';
+        if (sectionId === 'overview') {
+            updateOverview();
+        }
+    }
+
+    // Function to save data to local storage
+    function saveData(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+    // Function to load data from local storage
+    function loadData() {
+        document.getElementById('name').value = localStorage.getItem('name') || '';
+        document.getElementById('email').value = localStorage.getItem('email') || '';
+        document.getElementById('bio').value = localStorage.getItem('bio') || '';
+        document.getElementById('educationDetails').value = localStorage.getItem('educationDetails') || '';
+        document.getElementById('workDetails').value = localStorage.getItem('workDetails') || '';
+        document.getElementById('skillsList').value = localStorage.getItem('skillsList') || '';
+        document.getElementById('projectsDetails').value = localStorage.getItem('projectsDetails') || '';
+        document.getElementById('contactName').value = localStorage.getItem('contactName') || '';
+        document.getElementById('contactEmail').value = localStorage.getItem('contactEmail') || '';
+        document.getElementById('contactMessage').value = localStorage.getItem('contactMessage') || '';
+    }
+
+    // Function to update the overview section
+    function updateOverview() {
+        document.getElementById('overviewName').textContent = localStorage.getItem('name') || '';
+        document.getElementById('overviewEmail').textContent = localStorage.getItem('email') || '';
+        document.getElementById('overviewBio').textContent = localStorage.getItem('bio') || '';
+        document.getElementById('overviewEducation').textContent = localStorage.getItem('educationDetails') || '';
+        document.getElementById('overviewWork').textContent = localStorage.getItem('workDetails') || '';
+        document.getElementById('overviewSkills').textContent = localStorage.getItem('skillsList') || '';
+        document.getElementById('overviewProjects').textContent = localStorage.getItem('projectsDetails') || '';
+    }
+
+    // Function to submit the contact form
+    function submitForm() {
+        alert("Your message has been sent!");
+        // Here you can implement form submission logic
+    }
+
+    // Load data when the page loads
+    window.onload = loadData;
+    showSection('home'); // Show the home section by default
+</script>
+
+</body>
+</html>
